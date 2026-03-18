@@ -3,14 +3,9 @@
 
 UPDATE orders
 SET status = 'Cancelled',
-    shippedDate = CURDATE(),
-    comments = 'Order cancelled by management'
-WHERE customerNumber IN (
-    SELECT customerNumber
-    FROM customers
-    WHERE contactFirstName = 'Elizabeth'
-    AND contactLastName = 'Lincoln'
-);
+shippedDate = CURDATE(),
+comments = 'Order cancelled due to delay'
+WHERE orderDate = '2003-09-28';
 
 --Exercise 5
 SELECT * FROM products WHERE productLine = 'Trains';
@@ -68,6 +63,7 @@ SELECT
 FROM customers;
 
 -- Exercise 10
+-- I had a problem with the name Elizabeth (I have already corrected it manually) because it had a space.
 UPDATE orders
 SET status = 'Cancelled',
 shippedDate = CURDATE(),
@@ -78,4 +74,14 @@ FROM customers
 WHERE contactFirstName = 'Elizabeth'
 AND contactLastName = 'Lincoln'
 );
-
+-- fix the space by adding the %.
+UPDATE orders 
+SET status = 'Cancelled', 
+    shippedDate = CURDATE(), 
+    comments = 'Order cancelled by management' 
+WHERE customerNumber IN (
+    SELECT customerNumber 
+    FROM customers 
+    WHERE contactFirstName LIKE 'Elizabeth%' 
+    AND contactLastName LIKE 'Lincoln%'
+);
